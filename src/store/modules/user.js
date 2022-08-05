@@ -1,4 +1,6 @@
 import { getImageCode, login } from '@/api/user'
+import { setTokenTime } from '@/utils/auth'
+
 export default {
   namespaced: true,
   state: {
@@ -11,7 +13,9 @@ export default {
     /* 判断登录状态 */
     success: '',
     /* 登录消息提示 */
-    msg: ''
+    msg: '',
+    /* 用户信息 */
+    userName: ''
   },
   mutations: {
     /* 获取验证码 */
@@ -24,6 +28,7 @@ export default {
       state.token = payload.token
       state.success = payload.success
       state.msg = payload.msg
+      state.userName = payload.userName
     }
   },
   actions: {
@@ -46,11 +51,15 @@ export default {
           context.state.clientToken,
           0
         )
-        console.log(res.data)
         context.commit('login', res.data)
+        setTokenTime()
       } catch (error) {
         console.log(error)
       }
+    },
+    /* 登出 */
+    logout(context) {
+      context.commit('login', {})
     }
   }
 }

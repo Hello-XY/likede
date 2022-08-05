@@ -13,3 +13,12 @@ export function setToken(token) {
 export function removeToken() {
   return Cookies.remove(TokenKey)
 }
+
+export const setTokenTime = () => {
+  Cookies.set('tokenTime', Date.now())
+}
+
+export const getTokenTime = () => {
+  return Cookies.get('tokenTime')
+}
+
